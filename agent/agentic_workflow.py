@@ -13,13 +13,27 @@ from langgraph.prebuilt import ToolNode, tools_conditions
 class GraphBuilder():
 
     def __init__(self):
-        
-        pass
+        self.tools = []
+ 
+        self.system_prompt = SYSYTEM_PROMPT
+       
 
-    def agent_fucntion(self):
-        pass
+    def agent_fucntion(self, state: MessagesState):
+        user_question = state["messages"]
+        input_question = SYSYTEM_PROMPT + user_question
+        response = self.llm_with_tools.invoke(input_question)
+        return response
     
     def build_grapg(self):
-        pass
+        StateGraph(MessagesState)
+        graph_builder.add_egde(START,"agent")
+        graph_builder.add_node("agent", self.agent_fucntion)
+        graph_builder.add_node("tools", ToolNode(tools=self.tools))
+        graph_builder.add_conditional_edges("agent",tools_conditions)
+        graph_builer.add_edge("tools",END)
+
+        self.graph = graph_builder.compile()
+        return self.graph
+
     def __call__(self):
         pass
