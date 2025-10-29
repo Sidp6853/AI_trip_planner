@@ -1,6 +1,6 @@
 # 🧭 AI Trip Planner
 
-An intelligent **AI-powered travel itinerary generator** built using **Streamlit**, **FastAPI**, and **Groq API (LLM)**.  
+An intelligent **AI-powered travel itinerary generator** built using **Streamlit**, **FastAPI**, and **LangGraph**.  
 Just enter your travel query in natural language like *"plan a 5 days trip to Goa"*, and the app instantly creates a **personalized trip plan** — with day-wise recommendations, attractions, and activities using an advanced agentic workflow.
 
 ---
@@ -9,10 +9,9 @@ Just enter your travel query in natural language like *"plan a 5 days trip to Go
 
 - 🌍 **Natural Language Processing** — Simply describe your travel plans in plain English.  
 - 🤖 **Agentic Workflow** — Powered by LangGraph for intelligent multi-agent orchestration.  
-- ⚡ **Lightning-Fast Generation** — Groq API delivers instant AI-powered itineraries.  
-- 🎯 **Personalized Planning** — Tailored recommendations based on your preferences.  
+- ⚡ **Lightning-Fast Generation** — Groq API delivers instant AI-powered itineraries.    
 - 🖥️ **Modern Architecture** — FastAPI backend with Streamlit frontend for seamless experience.  
-- 📊 **Workflow Visualization** — Automatic generation of agent workflow graphs.
+
 
 ---
 
@@ -33,7 +32,8 @@ Just enter your travel query in natural language like *"plan a 5 days trip to Go
 
 ### Prerequisites
 
-- Python 3.8 or higher
+- Python 3.10 or higher
+- [uv](https://github.com/astral-sh/uv) - Fast Python package installer
 - Groq API key
 
 ### Installation Steps
@@ -44,18 +44,41 @@ Just enter your travel query in natural language like *"plan a 5 days trip to Go
    cd AI_trip_planner
    ```
 
-2. **Create a Virtual Environment**
+2. **Install uv (if not already installed)**
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install uv
    ```
 
-3. **Install Dependencies**
+3. **Create a Virtual Environment with uv**
+   
+   If you have conda active, deactivate it first:
    ```bash
-   pip install -r requirements.txt
+   conda deactivate
+   ```
+   
+   Create the virtual environment:
+   ```bash
+   uv venv env --python cpython-3.10.18-windows-x86_64-none
    ```
 
-4. **Set Up Environment Variables**
+4. **Activate the Virtual Environment**
+   
+   On Windows:
+   ```bash
+   .\env\Scripts\activate.bat
+   ```
+   
+   On Linux/Mac:
+   ```bash
+   source env/bin/activate
+   ```
+
+5. **Install Dependencies**
+   ```bash
+   uv pip install -r requirements.txt
+   ```
+
+6. **Set Up Environment Variables**
    
    Create a `.env` file in the root directory:
    ```env
@@ -94,15 +117,7 @@ streamlit run streamlit_app.py
 
 The application will open in your browser at `http://localhost:8501`
 
----
 
-## 🔑 Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `GROQ_API_KEY` | Your Groq API key for LLM access | Yes |
-
----
 
 ## 💡 Usage
 
@@ -123,9 +138,7 @@ The application uses LangGraph to orchestrate intelligent agents:
 
 ```
 User Query → FastAPI → LangGraph Workflow → Groq LLM → Personalized Itinerary
-                ↓
-          Workflow Graph
-          (saved as PNG)
+            
 ```
 
 The agent workflow is automatically visualized and saved as `my_graph.png` with each request.
